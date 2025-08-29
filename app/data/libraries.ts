@@ -1,30 +1,51 @@
-
 // library attributes
 const allnoise = new Set(["Quiet", "Conversational"]);
-const allseat = new Set(["Sofa", "Single Desk", "Group Table"]);
+const allseat = new Set(["Sofa", "Single Desk", "Group Table", "Monitor"]);
 const allcharging = new Set(["Charging", "No Charging"]);
 
 // Array storing each library
 const libraries: Array<{
   name: string;
+  urlname: string;
   noise: string[];
   seat: string[];
   charging: string;
+  imgsrc: string;
 }> = [];
 
 // creating a library
 createLibrary(
-  "name",
+  "Baillieu Library",
   ["Quiet"],
   ["Sofa", "Single Desk"],
-  "Charging"
+  "Charging",
+  "baillieu.jpg"
 );
+
+createLibrary(
+  "ERC Library",
+  ["Quiet"],
+  ["Sofa", "Single Desk"],
+  "Charging",
+  "erc.JPG"
+);
+
+createLibrary(
+  "Giblin Eunson Library",
+  ["Quiet"],
+  ["Sofa", "Single Desk", "Monitor"],
+  "Charging",
+  "giblin.jpg"
+);
+
+
 
 function createLibrary(
   name: string,
   noise: string[],
   seat: string[],
-  charging: string
+  charging: string,
+  imgsrc: string
 ) {
 
   // base cases
@@ -43,13 +64,16 @@ function createLibrary(
 
   const library = {
     name: name,
+    urlname: name.toLowerCase().replace(/\s+/g, "-"),
     noise: validNoise,
     seat: validSeats,
     charging: charging,
+    imgsrc: imgsrc,
   };
 
   libraries.push(library);
   return library;
 }
+
 
 export { libraries, createLibrary };
