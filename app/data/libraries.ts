@@ -1,7 +1,6 @@
-
 // library attributes
 const allnoise = new Set(["Quiet", "Conversational"]);
-const allseat = new Set(["Sofa", "Single Desk", "Group Table"]);
+const allseat = new Set(["Sofa", "Single Desk", "Group Table", "Monitor"]);
 const allcharging = new Set(["Charging", "No Charging"]);
 
 // Array storing each library
@@ -14,11 +13,27 @@ const libraries: Array<{
 
 // creating a library
 createLibrary(
-  "name",
+  "Baillieu Library",
   ["Quiet"],
   ["Sofa", "Single Desk"],
   "Charging"
 );
+
+createLibrary(
+  "ERC Library",
+  ["Quiet"],
+  ["Sofa", "Single Desk"],
+  "Charging"
+);
+
+createLibrary(
+  "Giblin Eunson Library",
+  ["Quiet"],
+  ["Sofa", "Single Desk", "Monitor"],
+  "Charging"
+);
+
+
 
 function createLibrary(
   name: string,
@@ -51,5 +66,6 @@ function createLibrary(
   libraries.push(library);
   return library;
 }
+
 
 export { libraries, createLibrary };
