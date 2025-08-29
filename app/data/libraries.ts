@@ -26,7 +26,7 @@ createLibrary(
   ["Quiet"],
   ["Sofa", "Single Desk"],
   "Charging",
-  "erc.jpg"
+  "erc.JPG"
 );
 
 createLibrary(
