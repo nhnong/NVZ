@@ -37,7 +37,6 @@ export default function Home() {
         <p>noise: {library1.noise.join(", ")}</p>
         <p>charging: {library1.charging}</p>
       </div>
-
     </main>
   );
 }
