@@ -1,10 +1,23 @@
 import Image from "next/image";
 
+// library attributes
 const allnoise = new Set(["Quiet", "Group Study"]);
 const allseat = new Set(["Sofa", "Single Desk", "Group Table"]);
 const allcharging = new Set(["Charging", "No Charging"]);
 
-const library1 = createLibrary("name", ["Quiet"], ["Sofa", "Single Desk"], "Charging");
+
+// creating a library
+const library1 = createLibrary("Baillieu Library", ["Quiet"], ["Sofa", "Single Desk"], "Charging");
+
+/* how a library looks like:
+library1 = {
+  name: "String name",
+  noise: ["Noise level 1", "Noise level 2"],
+  seat: ["Seat type 1", "Seat type 2"... etc],
+  charging: "Charging" | "No Charging"
+}
+
+*/
 
 function createLibrary(name: string, noise: string[], seat: string[], charging: string){
 
@@ -37,7 +50,6 @@ export default function Home() {
         <p>noise: {library1.noise.join(", ")}</p>
         <p>charging: {library1.charging}</p>
       </div>
-
     </main>
   );
 }
