@@ -37,7 +37,7 @@ function createLibrary(
 export default function Home() {
   return (
     <main>
-      <h1 className="text-3x1 font-bold text-center">Welcome, User!</h1>
+      <h1 className="text-5x1 font-bold text-center">Welcome, User!</h1>
       <p>Where would you like to study today?</p>
       <div>
         <p>name: {library1.name}</p>
