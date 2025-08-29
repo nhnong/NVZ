@@ -3,7 +3,7 @@ import { libraries } from "@/app/data/libraries";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-export default function LibraryPage({ params }: { params: { library: string } }) {
+export default function LibraryPage({ params }: any) {
     const library = libraries.find((lib: typeof libraries[number]) => lib.urlname === params.library);
     if (!library) {
         return notFound();
