@@ -42,7 +42,7 @@ function createLibrary(
     throw new Error(`Empty/ Invalid noise or seat options`);
   }
 
-  const library = {
+  let library = {
     name: name,
     noise: validNoise,
     seat: validSeats,
