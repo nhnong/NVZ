@@ -9,7 +9,7 @@ export default function Home() {
         Welcome, User!
       </h1>
       <p>Where would you like to study today?</p>
-      <div>
+      <div className="text-center">
         <p>name: {libraries[0].name}</p>
         <p>seats: {libraries[0].seat.join(", ")}</p>
         <p>noise: {libraries[0].noise.join(", ")}</p>
