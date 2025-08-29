@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { libraries } from "@/app/data/libraries";
 import { notFound } from "next/navigation";
