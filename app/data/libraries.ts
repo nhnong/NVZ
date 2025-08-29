@@ -6,6 +6,7 @@ const allcharging = new Set(["Charging", "No Charging"]);
 // Array storing each library
 const libraries: Array<{
   name: string;
+  urlname: string;
   noise: string[];
   seat: string[];
   charging: string;
@@ -63,6 +64,7 @@ function createLibrary(
 
   const library = {
     name: name,
+    urlname: name.toLowerCase().replace(/\s+/g, "-"),
     noise: validNoise,
     seat: validSeats,
     charging: charging,
