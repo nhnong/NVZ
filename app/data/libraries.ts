@@ -9,6 +9,7 @@ const libraries: Array<{
   noise: string[];
   seat: string[];
   charging: string;
+  imgsrc: string;
 }> = [];
 
 // creating a library
@@ -16,21 +17,24 @@ createLibrary(
   "Baillieu Library",
   ["Quiet"],
   ["Sofa", "Single Desk"],
-  "Charging"
+  "Charging",
+  "baillieu.jpg"
 );
 
 createLibrary(
   "ERC Library",
   ["Quiet"],
   ["Sofa", "Single Desk"],
-  "Charging"
+  "Charging",
+  "erc.jpg"
 );
 
 createLibrary(
   "Giblin Eunson Library",
   ["Quiet"],
   ["Sofa", "Single Desk", "Monitor"],
-  "Charging"
+  "Charging",
+  "giblin.jpg"
 );
 
 
@@ -39,7 +43,8 @@ function createLibrary(
   name: string,
   noise: string[],
   seat: string[],
-  charging: string
+  charging: string,
+  imgsrc: string
 ) {
 
   // base cases
@@ -61,6 +66,7 @@ function createLibrary(
     noise: validNoise,
     seat: validSeats,
     charging: charging,
+    imgsrc: imgsrc,
   };
 
   libraries.push(library);
