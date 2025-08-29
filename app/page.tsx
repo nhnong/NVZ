@@ -14,7 +14,7 @@ let libraries: Array<{
 }> = [];
 
 // creating a library
-libraries = createLibrary(
+createLibrary(
   "name",
   ["Quiet"],
   ["Sofa", "Single Desk"],
@@ -38,11 +38,11 @@ function createLibrary(
   let validNoise = noise.filter((n) => allnoise.has(n));
   let validSeats = seat.filter((s) => allseat.has(s));
 
-  if (!validNoise || !validSeats) {
+  if (validNoise.length == 0 || validSeats.length == 0) {
     throw new Error(`Empty/ Invalid noise or seat options`);
   }
 
-  let library = {
+  const library = {
     name: name,
     noise: validNoise,
     seat: validSeats,
@@ -50,8 +50,7 @@ function createLibrary(
   };
 
   libraries.push(library);
-
-  return libraries;
+  return library;
 }
 
 export default function Home() {
