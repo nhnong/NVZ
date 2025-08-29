@@ -34,7 +34,7 @@ createLibrary(
   ["Quiet"],
   ["Sofa", "Single Desk", "Monitor"],
   "Charging",
-  "giblin.jpg"
+  "giblin.JPG"
 );
 
 
