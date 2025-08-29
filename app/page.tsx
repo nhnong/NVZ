@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 // library attributes
 const allnoise = new Set(["Quiet", "Conversational"]);

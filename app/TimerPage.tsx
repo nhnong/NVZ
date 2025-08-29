@@ -1,7 +1,7 @@
 import Timer from "@/public/TimerComponents/timer"
-export default function Home(){
+export default function TimerPage(){
     return (
-        <div>
+        <div className="bg-gray-50">
             <Timer/>
         </div>
     )
