@@ -11,11 +11,18 @@ export default function Home() {
       </h1>
       <p>Where would you like to study today?</p>
       <div className="text-center">
-        <p>name: {libraries[0].name}</p>
-        <p>seats: {libraries[0].seat.join(", ")}</p>
-        <p>noise: {libraries[0].noise.join(", ")}</p>
-        <p>charging: {libraries[0].charging}</p>
+        {libraries.map((lib) => (
+          <div key={lib.name}>
+            <h2>{lib.name}</h2>
+            <p>seats: {lib.seat.join(", ")}</p>
+            <p>noise: {lib.noise.join(", ")}</p>
+            <p>charging: {lib.charging}</p>
+          </div>
+        ))}
       </div>
     </main>
   );
 }
+
+
+
