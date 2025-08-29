@@ -1,9 +1,22 @@
 import Image from "next/image";
 
+// library attributes
 const allnoise = new Set(["Quiet", "Group Study"]);
 const allseat = new Set(["Sofa", "Single Desk", "Group Table"]);
 const allcharging = new Set(["Charging", "No Charging"]);
 
+/* how a library looks like:
+library1 = {
+  name: "String name",
+  noise: ["Noise level 1", "Noise level 2"],
+  seat: ["Seat type 1", "Seat type 2"... etc],
+  charging: "Charging" | "No Charging"
+}
+
+*/
+
+
+// creating a library
 const library1 = createLibrary(
   "name",
   ["Quiet"],
@@ -17,6 +30,7 @@ function createLibrary(
   seat: string[],
   charging: string
 ) {
+
   if (!name) {
     throw new Error("Name is required");
   }
