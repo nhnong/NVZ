@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from 'next/link';
 
 // library attributes
 const allnoise = new Set(["Quiet", "Conversational"]);
@@ -66,6 +67,7 @@ export default function Home() {
         <p>seats: {libraries[0].seat.join(", ")}</p>
         <p>noise: {libraries[0].noise.join(", ")}</p>
         <p>charging: {libraries[0].charging}</p>
+        <Link href ="/timer/timerPage">Timer</Link>
       </div>
     </main>
   );
