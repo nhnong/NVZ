@@ -6,7 +6,7 @@ const allseat = new Set(["Sofa", "Single Desk", "Group Table"]);
 const allcharging = new Set(["Charging", "No Charging"]);
 
 // Array storing each library
-let libraries: Array<{
+const libraries: Array<{
   name: string;
   noise: string[];
   seat: string[];
@@ -35,8 +35,8 @@ function createLibrary(
   if (!allcharging.has(charging)) {
     throw new Error(`Invalid charging option: ${charging}`);
   }
-  let validNoise = noise.filter((n) => allnoise.has(n));
-  let validSeats = seat.filter((s) => allseat.has(s));
+  const validNoise = noise.filter((n) => allnoise.has(n));
+  const validSeats = seat.filter((s) => allseat.has(s));
 
   if (validNoise.length == 0 || validSeats.length == 0) {
     throw new Error(`Empty/ Invalid noise or seat options`);
