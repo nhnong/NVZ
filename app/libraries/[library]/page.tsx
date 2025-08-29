@@ -19,12 +19,13 @@ export default async function LibraryPage({ params }: any) {
     }
 
     return (
-        <main className="p-4">
+        <main className="mx-auto w-max p-4">
+
             <div className="flex items-center gap-2 bg-[#D9E7FC] rounded-lg w-fit px-3 py-1 mb-4">
                 <Image src="/sofa_available.png" alt="Seat Icon" width={20} height={20} />
                 <span className="text-[10px]">Seats available: 30</span>
             </div >
-            <div className="w-64 h-30 overflow-hidden rounded-lg mb-4">
+            <div className="w-max h-30 overflow-hidden rounded-lg mb-4">
                 <Image src={library.imgsrc} alt={library.name} width={500} height={100} className="rounded-lg mb-4" />
             </div>
             
@@ -32,10 +33,7 @@ export default async function LibraryPage({ params }: any) {
             <p className="text-[12px]">Opening Hours: <br/>{library.openhours.split("\n").map((line, index) => (
                 <span key={index}>{line}<br/></span>
             ))}</p>
-            <p className="text-[12px] font-bold"><span>🌙</span>After-hours study zone available</p>
-            <p>seats: {library.seat.join(", ")}</p>
-            <p>noise: {library.noise.join(", ")}</p>
-            <p>charging: {library.charging}</p>
+            <p className="text-[12px] font-bold mb-6"><span>🌙</span>After-hours study zone available</p>
 
             <div className="space-y-4">
 
@@ -62,3 +60,11 @@ export default async function LibraryPage({ params }: any) {
         </main>
     )
 }
+
+// dynamic library attributes
+/*
+            <p className="text-[12px]">seats: {library.seat.join(", ")}</p>
+            <p className="text-[12px]">noise: {library.noise.join(", ")}</p>
+            <p className="text-[12px]">charging: {library.charging}</p>
+
+*/
