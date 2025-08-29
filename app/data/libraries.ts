@@ -1,4 +1,3 @@
-import Image from "next/image";
 
 // library attributes
 const allnoise = new Set(["Quiet", "Conversational"]);
@@ -53,20 +52,4 @@ function createLibrary(
   return library;
 }
 
-export default function Home() {
- 
-  return (
-    <main>
-      <h1 className="text-center font-bold text-[48px] leading-none">
-        Welcome, User!
-      </h1>
-      <p>Where would you like to study today?</p>
-      <div>
-        <p>name: {libraries[0].name}</p>
-        <p>seats: {libraries[0].seat.join(", ")}</p>
-        <p>noise: {libraries[0].noise.join(", ")}</p>
-        <p>charging: {libraries[0].charging}</p>
-      </div>
-    </main>
-  );
-}
+export { libraries, createLibrary };
