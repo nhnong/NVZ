@@ -4,9 +4,16 @@ import { libraries } from "@/app/data/libraries";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 
-export default function LibraryPage({ params }: any) {
+interface LibraryPageProps {
+  params: { library: string };
+}
 
-    const library = libraries.find((lib) => lib.urlname === params.library);
+
+export default async function LibraryPage({ params }: any) {
+    const resolvedParams = await params;
+    const libraryUrl = resolvedParams.library;
+
+    const library = libraries.find((lib) => lib.urlname === libraryUrl);
     if (!library) {
         return notFound();
     }
