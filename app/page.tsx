@@ -17,7 +17,7 @@ export default function Home() {
           <div key={lib.name}>
             <div className="relative h-55 w-80">
               <Image              
-                src={`/${lib.imgsrc}`}
+                src={`${lib.imgsrc}`}
                 alt={lib.name}
                 fill
                 className="object-cover rounded-lg"
