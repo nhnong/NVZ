@@ -29,9 +29,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       > <header className="flex flex-row justify-between w-full sm:px-6 py-5 bg-[#0E2647]">
-          <Link href ="/"  className="text-white">Home</Link>
+          <Link href ="/"  className="text-white ml-10">Home</Link>
         <div>
-          <Link href ="/timer" className="text-white">Timer</Link>
+          <Link href ="/todo" className="text-white mr-10">Timer and To-do List</Link>
         </div>
       </header>
         {children}
