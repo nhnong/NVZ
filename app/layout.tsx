@@ -35,6 +35,10 @@ export default function RootLayout({
         </div>
       </header>
         {children}
+
+      <footer className="flex flex-row justify-between w-full sm:px-6 py-5 bg-[#0E2647] mt-20 text-[10px]">
+        <p className="text-white">© 2025 WIT Hackathon | NVZ</p>
+      </footer>
       </body>
     </html>
   );
