@@ -6,6 +6,15 @@ export default function Home() {
  
   return (
     <main>
+      <header className="flex flex-row justify-between max-w-5xl mx-auto px-4 py-3 sm:px-6">
+        <a href="/">Home</a>
+        <div>
+          <a href="/login">Login</a>
+          <a href="/contact">Contact</a>
+          <a href="/timer">timer</a>  
+          {/* <Link href ="/timer">Timer</Link> */}
+        </div>
+      </header>
       <div className="text-center mt-8 mb-8">
         <h1 className="text-center font-bold text-[30px] leading-none">
           Welcome, User!
