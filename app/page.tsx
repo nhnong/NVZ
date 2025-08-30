@@ -23,12 +23,7 @@ export default function Home() {
  
   return (
     <main>
-      <header className="flex flex-row justify-between max-w-5xl mx-auto px-4 py-3 sm:px-6">
-        <Link href ="/">Home</Link>
-        <div>
-          <Link href ="/timer">Timer</Link>
-        </div>
-      </header>
+
       <div className="text-center mt-8 mb-8">
         <h1 className="text-center font-bold text-[30px] leading-none">
           Welcome, User!
@@ -59,7 +54,7 @@ export default function Home() {
           
           <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50">
             <div
-              className="bg-white w-100 rounded-lg shadow-lg p-6 mt-20 mr-10"
+              className="bg-white w-80 rounded-lg shadow-lg p-6 mt-20 mr-10"
               onClick={(e) => e.stopPropagation()} // prevent backdrop click from closing
             >
               <p className="font-semibold mb-4">Filter by:</p>

@@ -1,4 +1,4 @@
-import Timer from "@/src/components/timer/timer"
+import Timer from "@/src/components/todo/todo"
 
 export default function TimerPage(){
     return (

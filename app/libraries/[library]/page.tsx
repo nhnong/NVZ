@@ -39,12 +39,7 @@ export default async function LibraryPage({ params }: any) {
 
     return (
         <main className="mx-auto w-max p-4">
-            <header className="flex flex-row justify-between max-w-5xl mx-auto px-4 py-3 sm:px-6">
-                <Link href ="/">Home</Link>
-                <div>
-                    <Link href ="/timer">Timer</Link>
-                </div>
-            </header>
+
 
 {/*library open times, lib picture, seats available*/}
             <div className="flex items-center gap-2 bg-[#D9E7FC] rounded-lg w-fit px-3 py-1 mb-4">
