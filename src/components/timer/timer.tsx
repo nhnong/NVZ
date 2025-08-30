@@ -1,237 +1,105 @@
 "use client";
+import { useState, useEffect } from "react";
 
-import { useTimerAudio } from "@/hooks/use-timer-audio";
-import { delay } from "@/lib/utils";
-import { useHydrateStore, useTimerConfigStore } from "@/store";
-import { TimerConfig } from "@/types";
-import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  IoPause,
-  IoPlay,
-  IoPlaySkipForwardOutline,
-  IoReload,
-} from "react-icons/io5";
-
-type TimerState = "work" | "shortBreak" | "longBreak";
-
-const timerStateTitles = {
-  work: "Focus",
-  shortBreak: "Short break",
-  longBreak: "Long break",
-};
-
-const getTimerStateSeconds = (timerConfig: TimerConfig) => {
-  return {
-    work: timerConfig.workMinutes * 60,
-    shortBreak: timerConfig.shortBreakMinutes * 60,
-    longBreak: timerConfig.longBreakMinutes * 60,
-  };
-};
-
-const getNextState = (
-  timerState: TimerState,
-  currentRound: number,
-  numberOfRounds: number
-) => {
-  if (timerState === "shortBreak" || timerState === "longBreak") {
-    return "work";
-  }
-
-  return currentRound % numberOfRounds === 0 ? "longBreak" : "shortBreak";
-};
-
-export default function Timer() {
-  const [time, setTime] = useState(0);
-  const [currentRound, setCurrentRound] = useState(1);
+export default function PomodoroTimer() {
+  const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [isRunning, setIsRunning] = useState(false);
-  const [timerState, setTimerState] = useState<TimerState>("work");
+  const [streak, setStreak] = useState(5); // Example
+  const [intervalType, setIntervalType] = useState<"study" | "break">("study");
 
-  const workerRef = useRef<Worker | null>(null);
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
 
-  const timerConfig = useTimerConfigStore((state) => state.timerConfig);
-  const hydrated = useHydrateStore((state) => state._hasHydrated);
-
-  const { playTimerAudio } = useTimerAudio();
-
-  const sendStartMessage = useCallback(
-    (time: number) => {
-      workerRef.current?.postMessage({
-        type: "start",
-        payload: time,
-      });
-    },
-    [workerRef]
-  );
-
-  const sendStopMessage = useCallback(() => {
-    workerRef.current?.postMessage({
-      type: "stop",
-    });
-  }, [workerRef]);
-
-  const handleWorkerMessage = (event: MessageEvent) => {
-    if (event.data.type === "tick") {
-      const remainingTime = event.data.payload;
-
-      setTime(remainingTime);
-
-      if (remainingTime <= 0) {
-        progressRoundRef.current();
+    if (isRunning && timeLeft > 0) {
+      timer = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+    } else if (timeLeft === 0) {
+      setIsRunning(false);
+      if (intervalType === "study") {
+        alert("Study session finished! Time for a break.");
+      } else {
+        alert("Break finished! Back to studying.");
       }
     }
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [isRunning, timeLeft, intervalType]);
+
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
   };
 
-  const toggleTimer = useCallback(() => {
-    if (!isRunning) {
-      sendStartMessage(time);
-    } else {
-      sendStopMessage();
-    }
+  const startStudy = () => {
+    setIntervalType("study");
+    setTimeLeft(25 * 60);
+    setIsRunning(true);
+  };
 
-    setIsRunning(!isRunning);
-  }, [isRunning, sendStartMessage, sendStopMessage, time]);
+  const startBreak = () => {
+    setIntervalType("break");
+    setTimeLeft(5 * 60);
+    setIsRunning(true);
+  };
 
-  const reset = useCallback(() => {
-    setTime(getTimerStateSeconds(timerConfig)[timerState]);
+  const togglePause = () => {
+    setIsRunning((prev) => !prev);
+  };
+
+  const reset = () => {
     setIsRunning(false);
-    sendStopMessage();
-  }, [timerConfig, timerState, sendStopMessage]);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.repeat) {
-        return;
-      }
-
-      if (event.key === " ") {
-        event.preventDefault();
-        toggleTimer();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [toggleTimer]);
-
-  useEffect(() => {
-    if (!hydrated) {
-      return;
-    } else {
-      setTime(getTimerStateSeconds(timerConfig)[timerState]);
-    }
-
-    const worker = new Worker(new URL("@/timer.worker.ts", import.meta.url));
-    workerRef.current = worker;
-    workerRef.current.onmessage = handleWorkerMessage;
-
-    return () => {
-      worker.terminate();
-    };
-  }, [hydrated, timerConfig, timerState]);
-
-  useEffect(() => {
-    window.document.title = `${formatTime(time)} | ${
-      timerStateTitles[timerState]
-    }`;
-  }, [time, timerState]);
-
-  useEffect(() => {
-    reset();
-  }, [timerConfig, reset]);
-
-  const progressRound = useCallback(async () => {
-    setIsRunning(false);
-    sendStopMessage();
-
-    const nextState = getNextState(
-      timerState,
-      currentRound,
-      timerConfig.numberOfRounds
-    );
-    const newTime = getTimerStateSeconds(timerConfig)[nextState];
-    setTime(newTime);
-
-    setCurrentRound((prevRound) =>
-      timerState === "work"
-        ? prevRound
-        : (prevRound % timerConfig.numberOfRounds) + 1
-    );
-
-    setTimerState(nextState);
-
-    await playTimerAudio();
-
-    const shouldAutoStart =
-      timerState === "work"
-        ? timerConfig.autoStartBreak
-        : timerConfig.autoStartWork;
-
-    if (shouldAutoStart) {
-      await delay(1500);
-      sendStartMessage(newTime);
-    }
-
-    setIsRunning(shouldAutoStart);
-  }, [
-    timerConfig,
-    timerState,
-    sendStopMessage,
-    currentRound,
-    sendStartMessage,
-  ]);
-
-  const progressRoundRef = useRef(progressRound);
-
-  useEffect(() => {
-    progressRoundRef.current = progressRound;
-  }, [progressRound]);
-
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    setTimeLeft(intervalType === "study" ? 25 * 60 : 5 * 60);
   };
 
   return (
-    <div
-      className="flex flex-col items-center min-w-72"
-      data-test-id="timer-round"
-    >
-      <h1 className="text-2xl text-white border-1 w-16 py-1 rounded-3xl self-end mb-4 text-center">
-        {currentRound}/{timerConfig.numberOfRounds}
-      </h1>
-      <h1 className="text-4xl mb-2 font-medium" data-testid="timer-state-title">
-        {timerStateTitles[timerState]}
-      </h1>
-      <h1
-        className="mb-4 text-8xl font-light font-mono tracking-tighter"
-        data-testid="timer-clock"
-      >
-        {formatTime(time)}
-      </h1>
-      <div className="flex gap-4">
+    <div className="flex flex-col items-center justify-center h-120 w-100 bg-white/70 font-sans">
+      <h1 className="text-2xl font-bold mb-6">Pomodoro Timer</h1>
+
+      {/* Timer rectangle */}
+      <div className="bg-white/50 px-16 py-6 rounded-lg shadow-md mb-6">
+        <span className="text-6xl font-mono text-black">{formatTime(timeLeft)}</span>
+      </div>
+
+      {/* Buttons Centered */}
+      <div className="flex flex-wrap justify-center gap-3 mb-4">
         <button
-          onClick={toggleTimer}
-          aria-label="Play/pause"
-          data-testid="play-pause"
+          onClick={startStudy}
+          className="bg-[#002B5C] text-white px-5 py-2 rounded-lg shadow hover:bg-[#001F43] transition"
         >
-          {!isRunning ? (
-            <IoPlay className="size-8 font-bold" />
-          ) : (
-            <IoPause className="size-8 font-bold" />
-          )}
+          Study (25m)
         </button>
-        <button onClick={reset} aria-label="Reset" data-testid="reset">
-          <IoReload className="size-8 font-bold" />
-        </button>
-        <button onClick={progressRound} aria-label="Reset" data-testid="skip">
-          <IoPlaySkipForwardOutline className="size-8" />
+        <button
+          onClick={startBreak}
+          className="bg-[#6C92D0] text-white px-5 py-2 rounded-lg shadow hover:bg-[#5776A8] transition"
+        >
+          Break (5m)
         </button>
       </div>
+
+      <div className="flex justify-center gap-3 mb-6">
+        <button
+          onClick={togglePause}
+          className="bg-gray-700 text-white px-5 py-2 rounded-lg shadow hover:bg-gray-900 transition"
+        >
+          {isRunning ? "Pause" : "Resume"}
+        </button>
+        <button
+          onClick={reset}
+          className="bg-gray-400 text-white px-5 py-2 rounded-lg shadow hover:bg-gray-500 transition"
+        >
+          Reset
+        </button>
+      </div>
+
+      {/* Streak */}
+      <p className="text-lg mt-2">
+        🔥 You’ve focused for{" "}
+        <span className="font-bold">{streak}</span> days in a row!
+      </p>
     </div>
   );
 }
