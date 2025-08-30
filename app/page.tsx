@@ -6,6 +6,12 @@ export default function Home() {
  
   return (
     <main>
+      <header className="flex flex-row justify-between max-w-5xl mx-auto px-4 py-3 sm:px-6">
+        <Link href ="/">Home</Link>
+        <div>
+          <Link href ="/timer">Timer</Link>
+        </div>
+      </header>
       <div className="text-center mt-8 mb-8">
         <h1 className="text-center font-bold text-[30px] leading-none">
           Welcome, User!
@@ -40,4 +46,3 @@ export default function Home() {
 //            <p>seats: {lib.seat.join(", ")}</p>
 //            <p>noise: {lib.noise.join(", ")}</p>
 //            <p>charging: {lib.charging}</p>
-
