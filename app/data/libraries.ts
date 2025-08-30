@@ -2,6 +2,7 @@
 const allnoise = new Set(["Quiet", "Conversational"]);
 const allseat = new Set(["Sofa", "Single Desk", "Group Table", "Monitor"]);
 const allcharging = new Set(["Charging", "No Charging"]);
+const timeplaceholder = "Monday to Friday	9am-8pm\nSaturday         10am-5pm\nSunday	      11am-5pm";
 
 // Array storing each library
 const libraries: Array<{
@@ -11,6 +12,7 @@ const libraries: Array<{
   seat: string[];
   charging: string;
   imgsrc: string;
+  openhours: string;
 }> = [];
 
 // creating a library
@@ -19,7 +21,8 @@ createLibrary(
   ["Quiet"],
   ["Sofa", "Single Desk"],
   "Charging",
-  "baillieu.jpg"
+  "/baillieu.jpg",
+  timeplaceholder
 );
 
 createLibrary(
@@ -27,7 +30,8 @@ createLibrary(
   ["Quiet"],
   ["Sofa", "Single Desk"],
   "Charging",
-  "erc.JPG"
+  "/erc.JPG",
+  timeplaceholder
 );
 
 createLibrary(
@@ -35,9 +39,9 @@ createLibrary(
   ["Quiet"],
   ["Sofa", "Single Desk", "Monitor"],
   "Charging",
-  "giblin.jpg"
+  "/giblin.jpg",
+  timeplaceholder
 );
-
 
 
 function createLibrary(
@@ -45,7 +49,8 @@ function createLibrary(
   noise: string[],
   seat: string[],
   charging: string,
-  imgsrc: string
+  imgsrc: string,
+  openhours: string
 ) {
 
   // base cases
@@ -69,6 +74,7 @@ function createLibrary(
     seat: validSeats,
     charging: charging,
     imgsrc: imgsrc,
+    openhours: openhours
   };
 
   libraries.push(library);
