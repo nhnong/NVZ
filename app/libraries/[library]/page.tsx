@@ -65,7 +65,7 @@ export default async function LibraryPage({ params }: any) {
 {/*buttons needing toggle feature*/}
             <div className="space-y-4 mb-10">
                 {/*Seats*/}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 text-align-middle">
                     <span className="w-20 font-semibold text-[12px]">Seats:</span> 
                     {library.seat.map((s) => (
                     <button key={s} className="px-3 rounded-xl border-2 border-[#0F2748] text-[12px]"> {s} </button>
