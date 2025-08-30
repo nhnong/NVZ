@@ -18,10 +18,17 @@ export default function Home() {
         </h1>
         <p>Where would you like to study today?</p>
       </div>
-      <div className="text-center flex flex-col sm:flex-row justify-center items-center gap-5">
+      <div className="flex justify-center my-5 mb-10">
+        <input
+          type="text"
+          placeholder="Search libraries..."
+          className="w-11/12 sm:w-2/3 lg:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <div className="px-4 sm:px-15 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {libraries.map((lib) => (
           <div key={lib.name}>
-            <div className="relative h-55 w-80">
+            <div className="relative aspect-[3/2] w-full mb-2.5">
               <Image              
                 src={`${lib.imgsrc}`}
                 alt={lib.name}
