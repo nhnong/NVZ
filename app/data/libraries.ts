@@ -1,7 +1,7 @@
 // library attributes
 const allnoise = new Set(["Quiet", "Conversational"]);
 const allseat = new Set(["Sofa", "Single Desk", "Group Table", "Monitor"]);
-const allcharging = new Set(["Charging", "No Charging"]);
+const allcharging = new Set(["Charging Available", "No Charging"]);
 const timeplaceholder = "Monday to Friday	9am-8pm\nSaturday         10am-5pm\nSunday	      11am-5pm";
 
 // Array storing each library
@@ -19,8 +19,8 @@ const libraries: Array<{
 createLibrary(
   "Baillieu Library",
   ["Quiet"],
-  ["Sofa", "Single Desk"],
-  "Charging",
+  ["Single Desk", "Group Table"],
+  "Charging Available",
   "/baillieu.jpg",
   timeplaceholder
 );
@@ -28,8 +28,8 @@ createLibrary(
 createLibrary(
   "ERC Library",
   ["Quiet"],
-  ["Sofa", "Single Desk"],
-  "Charging",
+  ["Single Desk", "Group Table", "Monitor"],
+  "Charging Available",
   "/erc.JPG",
   timeplaceholder
 );
@@ -38,8 +38,35 @@ createLibrary(
   "Giblin Eunson Library",
   ["Quiet"],
   ["Sofa", "Single Desk", "Monitor"],
-  "Charging",
+  "Charging Available",
   "/giblin.jpg",
+  timeplaceholder
+);
+
+createLibrary(
+  "Melbourne School of Design (MSD)",
+  ["Quiet"],
+  ["Sofa", "Group Table", "Monitor"],
+  "Charging Available",
+  "/msd.jpg",
+  timeplaceholder
+);
+
+createLibrary(
+  "Arts West",
+  ["Conversational"],
+  ["Sofa", "Group Table", "Monitor", "Single Desk"],
+  "Charging Available",
+  "/artwest.jpg",
+  timeplaceholder
+);
+
+createLibrary(
+  "Arts and Cultural Building",
+  ["Conversational"],
+  ["Single Desk", "Group Table"],
+  "Charging Available",
+  "/artsandcult.jpg",
   timeplaceholder
 );
 

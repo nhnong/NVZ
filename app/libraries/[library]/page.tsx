@@ -3,10 +3,32 @@
 import { libraries } from "@/app/data/libraries";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
+
 
 interface LibraryPageProps {
   params: { library: string };
 }
+const getRandomSeats = (min: number, max: number) =>
+    Math.floor(Math.random() * (max - min + 1)) + min;
+
+const seatLevelsBlock = (
+  <div className="peer-checked:block hidden pl-4 mt-2 space-y-2">
+    <div className="flex justify-between px-5 py-2.5 rounded-lg bg-[#D9D9D9] text-[12px]">
+      <p>Level 1</p>
+      <p>Available: {getRandomSeats(5, 15)}</p>
+    </div>
+    <div className="flex justify-between px-5 py-2.5 rounded-lg bg-[#D9D9D9] text-[12px]">
+      <p>Level 2</p>
+      <p>Available: {getRandomSeats(5, 15)}</p>
+    </div>
+    <div className="flex justify-between px-5 py-2.5 rounded-lg bg-[#D9D9D9] text-[12px]">
+      <p>Level 3</p>
+      <p>Available: {getRandomSeats(5, 15)}</p>
+    </div>
+  </div>
+);
+
 
 export default async function LibraryPage({ params }: any) {
     const resolvedParams = await params;
@@ -18,10 +40,17 @@ export default async function LibraryPage({ params }: any) {
 
     return (
         <main className="mx-auto w-max p-4">
+            <header className="flex flex-row justify-between max-w-5xl mx-auto px-4 py-3 sm:px-6">
+                <Link href ="/">Home</Link>
+                <div>
+                    <Link href ="/timer">Timer</Link>
+                </div>
+            </header>
 
+{/*library open times, lib picture, seats available*/}
             <div className="flex items-center gap-2 bg-[#D9E7FC] rounded-lg w-fit px-3 py-1 mb-4">
                 <Image src="/sofa_available.png" alt="Seat Icon" width={20} height={20} />
-                <span className="text-[10px]">Seats available: 30</span>
+                <span className="text-[10px]">Seats Available: {getRandomSeats(10, 50)}</span>
             </div >
             <div className="w-max h-30 overflow-hidden rounded-lg mb-4">
                 <Image src={library.imgsrc} alt={library.name} width={500} height={100} className="rounded-lg mb-4" />
@@ -33,25 +62,27 @@ export default async function LibraryPage({ params }: any) {
             ))}</p>
             <p className="text-[12px] font-bold mb-6"><span>🌙</span>After-hours study zone available</p>
 
+
+{/*buttons needing toggle feature*/}
             <div className="space-y-4 mb-10">
-
+                {/*Seats*/}
                 <div className="flex items-center gap-4">
-                    <span className="w-20 font-semibold text-[12px]">Seats:</span> {/* fixed width */}
-                    <button className="px-3 rounded-xl border-2 border-[#0F2748] text-[12px]">Sofa</button>
-                    <button className="px-3 rounded-xl border-2 border-[#0F2748] text-[12px]">Single Desk</button>
-                    <button className="px-3 rounded-xl border-2 border-[#0F2748] text-[12px]">Group Table</button>
+                    <span className="w-20 font-semibold text-[12px]">Seats:</span> 
+                    {library.seat.map((s) => (
+                    <button key={s} className="px-3 rounded-xl border-2 border-[#0F2748] text-[12px]"> {s} </button>
+                    ))}
                 </div>
-
+                {/*Noise*/}
                 <div className="flex items-center gap-4">
-                    <span className="w-20 font-semibold text-[12px]">Noise level:</span> {/* same width */}
-                    <button className="px-3 rounded-xl border-2 border-[#0F2748] text-[12px]">Quiet</button>
-                    <button className="px-3 rounded-xl border-2 border-[#0F2748] text-[12px]">Conversational</button>
+                    <span className="w-20 font-semibold text-[12px]">Noise level:</span>
+                    {library.noise.map((n) => (
+                    <button key={n} className="px-3 rounded-xl border-2 border-[#0F2748] text-[12px]"> {n} </button>
+                    ))}
                 </div>
-
+                {/*Charging*/}
                 <div className="flex items-center gap-4">
-                    <span className="w-20 font-semibold text-[12px]">Charging:</span> {/* same width */}
-                    <button className="px-3 rounded-xl border-2 border-[#0F2748] text-[12px]">Available</button>
-                    <button className="px-3 rounded-xl border-2 border-[#0F2748] text-[12px]">Not Available</button>
+                    <span className="w-20 font-semibold text-[12px]">Charging:</span> 
+                    <button className="px-3 rounded-xl border-2 border-[#0F2748] text-[12px]">{library.charging}</button>
                 </div>
             </div>
 
@@ -70,20 +101,7 @@ export default async function LibraryPage({ params }: any) {
                         <p>Available: #</p>
                     </div>
                 </label>
-                <div className="peer-checked:block hidden pl-4 mt-2 space-y-2">
-                    <div className="flex justify-between px-5 py-2.5 rounded-lg bg-[#D9D9D9] text-[12px]">
-                        <p>Level 1</p>
-                        <p>Available: #</p>
-                    </div>
-                    <div className="flex justify-between px-5 py-2.5 rounded-lg bg-[#D9D9D9] text-[12px]">
-                        <p>Level 2</p>
-                        <p>Available: #</p>
-                    </div>
-                    <div className=" flex justify-between px-5 py-2.5 rounded-lg bg-[#D9D9D9] text-[12px]">
-                        <p>Level 3</p>
-                        <p>Available: #</p>
-                    </div>
-                </div>
+                {seatLevelsBlock}
             </div>
             <div className="space-y-4 mb-3">
                 <input type="checkbox" id="desk-toggle" className="hidden peer" />
@@ -99,20 +117,7 @@ export default async function LibraryPage({ params }: any) {
                         <p>Available: #</p>
                     </div>
                 </label>
-                <div className="peer-checked:block hidden pl-4 mt-2 space-y-2">
-                    <div className="flex justify-between px-5 py-2.5 rounded-lg bg-[#D9D9D9] text-[12px]">
-                        <p>Level 1</p>
-                        <p>Available: #</p>
-                    </div>
-                    <div className="flex justify-between px-5 py-2.5 rounded-lg bg-[#D9D9D9] text-[12px]">
-                        <p>Level 2</p>
-                        <p>Available: #</p>
-                    </div>
-                    <div className=" flex justify-between px-5 py-2.5 rounded-lg bg-[#D9D9D9] text-[12px]">
-                        <p>Level 3</p>
-                        <p>Available: #</p>
-                    </div>
-                </div>
+                {seatLevelsBlock}
             </div>
             <div className="space-y-4 mb-3">
                 <input type="checkbox" id="group-toggle" className="hidden peer" />
@@ -128,20 +133,7 @@ export default async function LibraryPage({ params }: any) {
                         <p>Available: #</p>
                     </div>
                 </label>
-                <div className="peer-checked:block hidden pl-4 mt-2 space-y-2">
-                    <div className="flex justify-between px-5 py-2.5 rounded-lg bg-[#D9D9D9] text-[12px]">
-                        <p>Level 1</p>
-                        <p>Available: #</p>
-                    </div>
-                    <div className="flex justify-between px-5 py-2.5 rounded-lg bg-[#D9D9D9] text-[12px]">
-                        <p>Level 2</p>
-                        <p>Available: #</p>
-                    </div>
-                    <div className="flex justify-between px-5 py-2.5 rounded-lg bg-[#D9D9D9] text-[12px]">
-                        <p>Level 3</p>
-                        <p>Available: #</p>
-                    </div>
-                </div>
+                {seatLevelsBlock}
             </div>
         </main>
     )
