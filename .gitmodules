@@ -1,0 +1,3 @@
+[submodule "pomoTimer"]
+	path = pomoTimer
+	url = https://github.com/srefsland/pomodoro-timer.git
